@@ -1,0 +1,7 @@
+- hosts: all
+  #gather_facts: no
+  tasks:
+    - name: print os arch
+      debug:
+        msg: "OS Arch = {{ansible_architecture}},OS Version  = {{ansible_virtualization_type}},
+		OS BIOS = {{ansible_bios_version}}, HOSTNAME = {{ansible_hostname}}"

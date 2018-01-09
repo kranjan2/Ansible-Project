@@ -1,0 +1,22 @@
+- hosts: all
+  become: yes
+  vars_prompt:
+     - name: userid
+       prompt: "Enter User id's : "
+       private: no
+     - name: desc
+       prompt: "Enter User Name : "
+       private: no		
+  tasks: 
+  - name: create deployment user
+    user: 
+      name: "{{userid}}"
+      comment: "{{desc}}"
+      createhome: yes 
+      state: present 
+      group: wheel	
+    register: newuser
+
+  - name: Set password for user only on creation
+    shell: echo "ChnageMe" | passwd --stdin "{{userid}}";chage -d 0 "{{userid}}" 
+    when: newuser.changed

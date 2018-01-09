@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  vars: 
+      userid : kranjan 
+  tasks: 
+  - name: Delete user
+    user: 
+      name: "{{userid}}"
+      state: absent 

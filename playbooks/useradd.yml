@@ -1,0 +1,14 @@
+- hosts: all
+  become: yes
+  tasks: 
+  - name: create deployment user
+    user: 
+      name: deployer
+      createhome: yes 
+      state: present 
+      group: wheel	
+    register: newuser
+
+  - name: Set password for user only on creation
+    shell: echo "ChnageMe" | passwd --stdin deployer;chage -d 0 deployer 
+    when: newuser.changed
